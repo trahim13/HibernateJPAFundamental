@@ -1,9 +1,13 @@
 package org.trahim.data.entity;
 
+import org.hibernate.annotations.Formula;
+
 import javax.persistence.*;
 import java.util.Date;
+
 @Entity
 @Table(name = "finances_user", schema = "fin")
+@Access(value = AccessType.FIELD) // где используем анотации
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,7 +17,8 @@ public class User {
     private String firstName;
     @Column(name = "LAST_NAME")
     private String lastName;
-    @Column(name = "BIRTH_DATE")
+
+    @Column(name = "BIRTH_DATE", nullable = false)// или @Basic(optional = false)
     private Date birthDate;
     @Column(name = "EMAIL_ADDRESS")
     private String emailAddress;
@@ -21,10 +26,22 @@ public class User {
     private String lastUpdatedBy;
     @Column(name = "LAST_UPDATED_DATE")
     private Date lastUpdatedDate;
-    @Column(name = "CREATED_BY")
+    @Column(name = "CREATED_BY", updatable = false)
     private String createdBy;
-    @Column(name = "CREATED_DATE")
+    @Column(name = "CREATED_DATE", updatable = false)
     private Date createdDate;
+
+
+    @Formula("lower(datediff(curdate(), birth_date)/365)")
+    private int age;
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
 
     public Long getUserId() {
         return userId;

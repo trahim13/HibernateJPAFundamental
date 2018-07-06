@@ -36,20 +36,23 @@ public class Bank {
 
     @Embedded
     private Address address;
+//
+//    @ElementCollection
+//    @CollectionTable(name = "BANK_CONTACT", joinColumns = @JoinColumn(name = "BANK_ID"))
+//    //вставляем в таблицу BANK_CONTACT, причем BANK_ID берем для вставки из таблицы BANK;
+//    @Column(name = "NAME")
+//    private Collection<String> contacts = new ArrayList<>();
 
-    @ElementCollection
-    @CollectionTable(name = "BANK_CONTACT", joinColumns = @JoinColumn(name = "BANK_ID"))
-    //вставляем в таблицу BANK_CONTACT, причем BANK_ID берем для вставки из таблицы BANK;
-    @Column(name = "NAME")
-    private Collection<String> contacts = new ArrayList<>();
 
-    public Collection<String> getContacts() {
-        return contacts;
-    }
 
-    public void setContacts(Collection<String> contact) {
-        this.contacts = contact;
-    }
+//    public Collection<String> getContacts() {
+//        return contacts;
+//    }
+//
+//    public void setContacts(Collection<String> contact) {
+//        this.contacts = contact;
+//    }
+
 
     public Address getAddress() {
         return address;
@@ -57,6 +60,20 @@ public class Bank {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    @ElementCollection
+    @CollectionTable(name = "BANK_CONTACT", joinColumns = @JoinColumn(name = "BANK_ID"))
+    @MapKeyColumn(name = "POSITION_TYPE")// это поле ключ
+    @Column(name = "NAME")//в это поле значение
+    private Map<String, String> mapContacts = new HashMap<>();
+
+    public Map<String, String> getMapContacts() {
+        return mapContacts;
+    }
+
+    public void setMapContacts(Map<String, String> mapContacts) {
+        this.mapContacts = mapContacts;
     }
 
     public Long getBankId() {

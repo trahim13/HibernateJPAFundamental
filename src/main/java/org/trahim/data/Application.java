@@ -14,7 +14,7 @@ public class Application {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         Bank bank = new Bank();
-        bank.setName("Federal Trust");
+        bank.setName("Federal great Trust");
 
         bank.setInternational(false);
         bank.setCreatedBy("Kevin");
@@ -22,8 +22,8 @@ public class Application {
         bank.setLastUpdatedBy("Kevin");
         bank.setLastUpdatedDate(new Date());
 
-        bank.getContacts().add("Joe1");
-        bank.getContacts().add("Mary2");
+        bank.getMapContacts().put("MANAGER", "Lui");
+        bank.getMapContacts().put("SELLER", "Andry");
 
         Address address = new Address();
         address.setAddressLine1("Line 2");

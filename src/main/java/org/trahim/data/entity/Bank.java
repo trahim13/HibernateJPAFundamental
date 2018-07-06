@@ -1,29 +1,49 @@
 package org.trahim.data.entity;
 
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
+@Table(name = "bank", schema = "fin")
 public class Bank {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "BANK_ID")
     private Long bankId;
 
+    @Column(name = "NAME")
     private String name;
 
-    private String addressLine1;
 
-    private String addressLine2;
 
-    private String city;
 
-    private String state;
-
-    private String zipCode;
-
+    @Column(name = "LAST_UPDATED_DATE")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date lastUpdatedDate;
 
+    @Column(name = "LAST_UPDATED_BY")
     private String lastUpdatedBy;
 
+    @Column(name = "CREATED_DATE")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
 
+    @Column(name = "CREATED_BY")
     private String createdBy;
+
+    @Column(name = "IS_INTERNATIONAL")
+    private boolean international;
+
+    @Embedded
+    private Address address;
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
 
     public Long getBankId() {
         return bankId;
@@ -41,45 +61,6 @@ public class Bank {
         this.name = name;
     }
 
-    public String getAddressLine1() {
-        return addressLine1;
-    }
-
-    public void setAddressLine1(String addressLine1) {
-        this.addressLine1 = addressLine1;
-    }
-
-    public String getAddressLine2() {
-        return addressLine2;
-    }
-
-    public void setAddressLine2(String addressLine2) {
-        this.addressLine2 = addressLine2;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getZipCode() {
-        return zipCode;
-    }
-
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
-    }
 
     public Date getLastUpdatedDate() {
         return lastUpdatedDate;
@@ -111,5 +92,13 @@ public class Bank {
 
     public void setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
+    }
+
+    public boolean isInternational() {
+        return international;
+    }
+
+    public void setInternational(boolean international) {
+        this.international = international;
     }
 }

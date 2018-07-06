@@ -18,5 +18,6 @@
     <!-- <property name="hbm2ddl.auto">update</property> -->
 
     <mapping class="org.trahim.data.entity.User"/>
+    <mapping class="org.trahim.data.entity.Bank"/>
   </session-factory>
 </hibernate-configuration>

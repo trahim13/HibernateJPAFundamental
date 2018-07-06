@@ -2,6 +2,8 @@ package org.trahim.data;
 
 import org.hibernate.Session;
 import org.trahim.data.HibernateUtil;
+import org.trahim.data.entity.Address;
+import org.trahim.data.entity.Bank;
 import org.trahim.data.entity.User;
 
 import java.util.Calendar;
@@ -12,30 +14,29 @@ public class Application {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         User user = new User();
-        user.setBirthDate(getBirthDate());
-        user.setCreatedBy("trahim");
-        user.setCreatedDate(new Date());
-        user.setEmailAddress("same@same.com");
-        user.setFirstName("trahim");
-        user.setLastName("Val");
-        user.setLastUpdatedBy("TRAHIM");
         user.setLastUpdatedDate(new Date());
+        user.setLastUpdatedBy("TRAHIM");
+        user.setLastName("MMM");
+        user.setEmailAddress("email@Mail.com");
+        user.setCreatedDate(new Date());
+        user.setBirthDate(new Date());
+        user.setAge(26);
+        user.setCreatedBy("eee");
+        user.setFirstName("ddd");
+
+        Address address = new Address();
+        address.setAddressLine1("Line 1");
+        address.setAddressLine2("Line 2");
+        address.setCity("New York");
+        address.setState("NY");
+        address.setZipCode("12345");
+        user.setAddress(address);
 
         session.save(user);
 
         session.getTransaction().commit();
-        session.refresh(user);
-        System.out.println(user.getAge());
+
         session.close();
         HibernateUtil.getSessionFactory().close();
-    }
-
-    private static Date getBirthDate() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.YEAR, 1992);
-        calendar.set(Calendar.MONTH, 2);
-        calendar.set(Calendar.DATE, 13);
-        return calendar.getTime();
-
     }
 }

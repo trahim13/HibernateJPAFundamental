@@ -13,7 +13,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "USER_ID")
     private Long userId;
-    @Column(name = "FIRST_NAME")
+    @Column(name = "FIRST_NAME", nullable = false)
     private String firstName;
     @Column(name = "LAST_NAME")
     private String lastName;
@@ -26,7 +26,7 @@ public class User {
     private String lastUpdatedBy;
     @Column(name = "LAST_UPDATED_DATE")
     private Date lastUpdatedDate;
-    @Column(name = "CREATED_BY", updatable = false)
+    @Column(name = "CREATED_BY", updatable = false, nullable = false)
     private String createdBy;
     @Column(name = "CREATED_DATE", updatable = false)
     private Date createdDate;
@@ -34,6 +34,19 @@ public class User {
 
     @Formula("lower(datediff(curdate(), birth_date)/365)")
     private int age;
+
+    @Embedded
+    @AttributeOverrides({@AttributeOverride(name = "addressLine1", column = @Column(name = "USER_ADDRESS_LINE_1")),
+                          @AttributeOverride(name = "addressLine2", column = @Column(name = "USER_ADDRESS_LINE_2"))})
+    Address address;
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
 
     public int getAge() {
         return age;

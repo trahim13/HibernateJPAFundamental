@@ -13,26 +13,27 @@ public class Application {
     public static void main(String[] args) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        User user = new User();
-        user.setLastUpdatedDate(new Date());
-        user.setLastUpdatedBy("TRAHIM");
-        user.setLastName("MMM");
-        user.setEmailAddress("email@Mail.com");
-        user.setCreatedDate(new Date());
-        user.setBirthDate(new Date());
-        user.setAge(26);
-        user.setCreatedBy("eee");
-        user.setFirstName("ddd");
+        Bank bank = new Bank();
+        bank.setName("Federal Trust");
+
+        bank.setInternational(false);
+        bank.setCreatedBy("Kevin");
+        bank.setCreatedDate(new Date());
+        bank.setLastUpdatedBy("Kevin");
+        bank.setLastUpdatedDate(new Date());
+
+        bank.getContacts().add("Joe1");
+        bank.getContacts().add("Mary2");
 
         Address address = new Address();
-        address.setAddressLine1("Line 1");
-        address.setAddressLine2("Line 2");
+        address.setAddressLine1("Line 2");
+        address.setAddressLine2("Line 3");
         address.setCity("New York");
         address.setState("NY");
         address.setZipCode("12345");
-        user.setAddress(address);
+        bank.setAddress(address);
 
-        session.save(user);
+        session.save(bank);
 
         session.getTransaction().commit();
 

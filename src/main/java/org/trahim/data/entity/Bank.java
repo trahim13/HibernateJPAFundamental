@@ -1,7 +1,7 @@
 package org.trahim.data.entity;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.util.*;
 
 @Entity
 @Table(name = "bank", schema = "fin")
@@ -36,6 +36,20 @@ public class Bank {
 
     @Embedded
     private Address address;
+
+    @ElementCollection
+    @CollectionTable(name = "BANK_CONTACT", joinColumns = @JoinColumn(name = "BANK_ID"))
+    //вставляем в таблицу BANK_CONTACT, причем BANK_ID берем для вставки из таблицы BANK;
+    @Column(name = "NAME")
+    private Collection<String> contacts = new ArrayList<>();
+
+    public Collection<String> getContacts() {
+        return contacts;
+    }
+
+    public void setContacts(Collection<String> contact) {
+        this.contacts = contact;
+    }
 
     public Address getAddress() {
         return address;

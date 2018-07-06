@@ -40,8 +40,11 @@ public class User {
     @ElementCollection
     @CollectionTable(name = "USER_ADDRESS", joinColumns = @JoinColumn(name = "USER_ID"))
     @AttributeOverrides({@AttributeOverride(name = "addressLine1", column = @Column(name = "USER_ADDRESS_LINE_1")),
-                          @AttributeOverride(name = "addressLine2", column = @Column(name = "USER_ADDRESS_LINE_2"))})
+            @AttributeOverride(name = "addressLine2", column = @Column(name = "USER_ADDRESS_LINE_2"))})
     private List<Address> address = new ArrayList<>();
+
+    @OneToOne(mappedBy = "user")
+    private Credential credential;
 
     public List<Address> getAddress() {
         return address;

@@ -1,31 +1,47 @@
 package org.trahim.data.entity;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+@Entity
+@Table(name = "account", schema = "fin")
 public class Account {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ACCOUNT_ID")
     private Long accountId;
 
-    private Bank bank;
+    @OneToMany(cascade=CascadeType.ALL, mappedBy = "account")
+    private List<Transaction> transactions = new ArrayList<>();
 
-    private AccountType accountType;
-
+    @Column(name = "NAME")
     private String name;
 
+    @Column(name = "INITIAL_BALANCE")
     private BigDecimal initialBalance;
 
+    @Column(name = "CURRENT_BALANCE")
     private BigDecimal currentBalance;
 
+    @Column(name = "OPEN_DATE")
     private Date openDate;
 
+    @Column(name = "CLOSE_DATE")
     private Date closeDate;
 
+    @Column(name = "LAST_UPDATED_DATE")
     private Date lastUpdatedDate;
 
+    @Column(name = "LAST_UPDATED_BY")
     private String lastUpdatedBy;
 
+    @Column(name = "CREATED_DATE")
     private Date createdDate;
 
+    @Column(name = "CREATED_BY")
     private String createdBy;
 
     public Long getAccountId() {
@@ -34,22 +50,6 @@ public class Account {
 
     public void setAccountId(Long accountId) {
         this.accountId = accountId;
-    }
-
-    public Bank getBank() {
-        return bank;
-    }
-
-    public void setBank(Bank bank) {
-        this.bank = bank;
-    }
-
-    public AccountType getAccountType() {
-        return accountType;
-    }
-
-    public void setAccountType(AccountType accountType) {
-        this.accountType = accountType;
     }
 
     public String getName() {
@@ -123,4 +123,17 @@ public class Account {
     public void setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
     }
+
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions = transactions;
+    }
+
+
+
+
+
 }

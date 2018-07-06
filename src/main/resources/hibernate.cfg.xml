@@ -20,5 +20,8 @@
     <mapping class="org.trahim.data.entity.User"/>
     <mapping class="org.trahim.data.entity.Bank"/>
     <mapping class="org.trahim.data.entity.Credential"/>
+    <mapping class="org.trahim.data.entity.Account"/>
+    <mapping class="org.trahim.data.entity.Transaction"/>
+
   </session-factory>
 </hibernate-configuration>

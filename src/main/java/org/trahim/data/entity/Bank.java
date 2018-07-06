@@ -64,7 +64,7 @@ public class Bank {
 
     @ElementCollection
     @CollectionTable(name = "BANK_CONTACT", joinColumns = @JoinColumn(name = "BANK_ID"))
-    @MapKeyColumn(name = "POSITION_TYPE")// это поле ключ
+    @MapKeyColumn(name = "POSITION_TYPE")// в это поле ключ
     @Column(name = "NAME")//в это поле значение
     private Map<String, String> mapContacts = new HashMap<>();
 

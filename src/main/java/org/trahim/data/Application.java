@@ -1,6 +1,7 @@
 package org.trahim.data;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.trahim.data.HibernateUtil;
 import org.trahim.data.entity.Address;
 import org.trahim.data.entity.Bank;
@@ -11,33 +12,59 @@ import java.util.Date;
 
 public class Application {
     public static void main(String[] args) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        Bank bank = new Bank();
-        bank.setName("Federal great Trust");
 
-        bank.setInternational(false);
-        bank.setCreatedBy("Kevin");
-        bank.setCreatedDate(new Date());
-        bank.setLastUpdatedBy("Kevin");
-        bank.setLastUpdatedDate(new Date());
+        try(Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Transaction transaction = session.beginTransaction();
 
-        bank.getMapContacts().put("MANAGER", "Lui");
-        bank.getMapContacts().put("SELLER", "Andry");
+            User user = new User();
 
-        Address address = new Address();
-        address.setAddressLine1("Line 2");
-        address.setAddressLine2("Line 3");
+            Address address = new Address();
+            Address address2 = new Address();
+            setAddressFields(address);
+            setAddressFields2(address2);
+            user.getAddress().add(address);
+            user.getAddress().add(address2);
+            setUserFields(user);
+
+            session.save(user);
+            transaction.commit();
+
+            session.close();
+            HibernateUtil.getSessionFactory().close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void setUserFields(User user) {
+        user.setAge(22);
+        user.setBirthDate(new Date());
+        user.setCreatedBy("kmb");
+        user.setCreatedDate(new Date());
+        user.setEmailAddress("kmb385");
+        user.setFirstName("Kevin");
+        user.setLastName("bowersox");
+        user.setLastUpdatedBy("kevin");
+        user.setLastUpdatedDate(new Date());
+    }
+
+    private static void setAddressFields(Address address) {
+        address.setAddressLine1("Line 1");
+        address.setAddressLine2("Line 2");
         address.setCity("New York");
         address.setState("NY");
         address.setZipCode("12345");
-        bank.setAddress(address);
-
-        session.save(bank);
-
-        session.getTransaction().commit();
-
-        session.close();
-        HibernateUtil.getSessionFactory().close();
     }
+
+    private static void setAddressFields2(Address address) {
+        address.setAddressLine1("Line 3");
+        address.setAddressLine2("Line 4");
+        address.setCity("Corning");
+        address.setState("NY");
+        address.setZipCode("12345");
+    }
+
+
+
 }

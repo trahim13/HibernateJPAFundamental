@@ -3,7 +3,9 @@ package org.trahim.data.entity;
 import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "finances_user", schema = "fin")
@@ -35,16 +37,17 @@ public class User {
     @Formula("lower(datediff(curdate(), birth_date)/365)")
     private int age;
 
-    @Embedded
+    @ElementCollection
+    @CollectionTable(name = "USER_ADDRESS", joinColumns = @JoinColumn(name = "USER_ID"))
     @AttributeOverrides({@AttributeOverride(name = "addressLine1", column = @Column(name = "USER_ADDRESS_LINE_1")),
                           @AttributeOverride(name = "addressLine2", column = @Column(name = "USER_ADDRESS_LINE_2"))})
-    Address address;
+    private List<Address> address = new ArrayList<>();
 
-    public Address getAddress() {
+    public List<Address> getAddress() {
         return address;
     }
 
-    public void setAddress(Address address) {
+    public void setAddress(List<Address> address) {
         this.address = address;
     }
 
